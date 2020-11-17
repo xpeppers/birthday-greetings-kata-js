@@ -14,11 +14,22 @@ async function emailListener(request, response) {
     return
   }
 
-  const { recipient, subject, body } = JSON.parse(await bodyFrom(request))
+  try {
+    const payload = await bodyFrom(request)
+    const { recipient, subject, body } = JSON.parse(payload)
 
-  console.log(`Sending email to "${recipient}" with subject "${subject}" and body "${body}"`)
+    if(!recipient || !subject || !body) {
+      throw Error("payload incomplete")
+    }
 
-  response.end(`Email sent to ${recipient}`)
+    console.log(`Sending email to "${recipient}" with subject "${subject}" and body "${body}"`)
+
+    response.end(`Email sent to ${recipient}`)
+
+  } catch(e) {
+    response.writeHead(500)
+    response.end(e.toString())
+  }
 }
 
 function bodyFrom(request) {
