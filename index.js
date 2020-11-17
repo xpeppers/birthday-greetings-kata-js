@@ -1,3 +1,6 @@
 const { BirthdayGreeting } = require("./birthday-greeting")
+const { createServer } = require("./fake-email-server")
 
-new BirthdayGreeting().sendGreetings(Date.now())
+createServer(() => {
+    new BirthdayGreeting().sendGreetings(Date.now())
+})
