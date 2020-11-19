@@ -2,7 +2,7 @@ const { createServer } = require("http")
 
 function startFakeEmailServer(callback) {
   createServer(emailListener).listen(3456, () => {
-    console.log("MailServer Started on port 3456")
+    console.log("MailServer Started on port 3456.\n\n")
     callback()
   })
 }
